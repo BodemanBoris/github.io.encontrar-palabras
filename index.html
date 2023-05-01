@@ -79,6 +79,24 @@
         margin-bottom: 20px;
       }
 
+      .letters-container{
+        width: 100%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 5px;
+        justify-content: center;
+      }
+
+      .letter-btn{
+        width: 30px;
+        height: 30px;
+        background-color: #5f5182;
+        color: #fff;
+        border-radius: 10px;
+      }
+
       /* **********   FOOTER   ***********  */
 
       .pie-pagina h3,
@@ -115,7 +133,37 @@
     </div>
     <h2>PALABRA</h2>
     <div id="word-container"></div>
-    <button id="btn-start">START</button>
+    <input type="button" value="START" id="btn-start">
+
+    <section class="letters-container">
+      <input type="button" class="letter-btn" value="Q">
+      <input type="button" class="letter-btn" value="W">
+      <input type="button" class="letter-btn" value="E">
+      <input type="button" class="letter-btn" value="R">
+      <input type="button" class="letter-btn" value="T">
+      <input type="button" class="letter-btn" value="Y">
+      <input type="button" class="letter-btn" value="U">
+      <input type="button" class="letter-btn" value="I">
+      <input type="button" class="letter-btn" value="O">
+      <input type="button" class="letter-btn" value="P">
+      <input type="button" class="letter-btn" value="A">
+      <input type="button" class="letter-btn" value="S">
+      <input type="button" class="letter-btn" value="D">
+      <input type="button" class="letter-btn" value="F">
+      <input type="button" class="letter-btn" value="G">
+      <input type="button" class="letter-btn" value="H">
+      <input type="button" class="letter-btn" value="J">
+      <input type="button" class="letter-btn" value="K">
+      <input type="button" class="letter-btn" value="L">
+      <input type="button" class="letter-btn" value="Ñ">
+      <input type="button" class="letter-btn" value="Z">
+      <input type="button" class="letter-btn" value="X">
+      <input type="button" class="letter-btn" value="C">
+      <input type="button" class="letter-btn" value="V">
+      <input type="button" class="letter-btn" value="B">
+      <input type="button" class="letter-btn" value="N">
+      <input type="button" class="letter-btn" value="M">
+    </section>
 
     <footer class="pie-pagina">
       <h3>Creado por Boris Bodeman &copy;</h3>
@@ -214,6 +262,10 @@
       const $usedLeters = d.getElementById("used-leters");
       const $wordContainer = d.getElementById("word-container");
       const $btnStart = d.getElementById("btn-start");
+
+      const $letterContainer = d.querySelector(".letters-container");
+      const abcArray = ["q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","ñ","z","x","c","v","b","n","m",]
+      const $letras = d.querySelectorAll(".letter-btn");
 
       let $canvas = d.getElementById("canvas");
       let ctx = $canvas.getContext("2d");
@@ -321,9 +373,30 @@
         console.log(selectedWord);
       };
 
-      /* console.log(
-        palabras[Math.floor(Math.random() * palabras.length)].toUpperCase()
-      ); */
+      
+
+       function presionarTecla(){
+        console.log(this.value)
+        let newLetter = this.value.toUpperCase();
+        if (newLetter.match(/^[a-zñ]$/i) && !usedLetters.includes(newLetter)) {
+          letterInput(newLetter);
+        }
+      }
+
+      $letras.forEach(letra=>{
+        letra.addEventListener("click", presionarTecla)
+      })
+      /* function crearLetras(){
+        abcArray.forEach(letra=>{
+          let input = d.createElement("input")
+          input.classList.add("letter-btn");
+          input.type="button"
+          input.value=letra.toUpperCase();
+          $letterContainer.appendChild(input)
+        })
+        
+      } */
+
 
       const startGame = () => {
         usedLetters = [];
@@ -335,10 +408,15 @@
         drowHangMan();
         selectRandomWord();
         drowWord();
+        crearLetras();
         d.addEventListener("keydown", letterEvent);
       };
 
       $btnStart.addEventListener("click", startGame);
+
+    
+
+
     </script>
   </body>
 </html>
